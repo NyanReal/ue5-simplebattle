@@ -16,4 +16,7 @@ class SIMPLEBATTLE_API ASimpleGameMode : public AGameModeBase {
 
 public:
   ASimpleGameMode();
+
+protected:
+  virtual void BeginPlay() override;
 };
