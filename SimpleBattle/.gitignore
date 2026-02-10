@@ -1,0 +1,43 @@
+# Unreal Engine 5 .gitignore
+
+# Visual Studio
+.vs/
+*.sln
+*.suo
+*.sdf
+*.opensdf
+*.opendb
+*.VC.db
+*.VC.opendb
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# Compiled Binaries
+Binaries/
+
+# Build Intermediates
+Intermediate/
+DerivedDataCache/
+
+# Saved data (logs, configs, screenshots, etc.)
+Saved/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Visual Studio config
+.vsconfig
+
+# Build artifacts
+Build/
