@@ -6,9 +6,9 @@
 #include "GameFramework/Character.h"
 #include "CharacterEnemy.generated.h"
 
+
 class UStaticMeshAppearanceComponent;
-class UDecalComponent;
-class UMaterialInstanceDynamic;
+class UAttackWarningComponent;
 
 /**
  * Enemy character that displays a rectangular decal warning before attacking.
@@ -29,7 +29,6 @@ public:
 
 protected:
   virtual void BeginPlay() override;
-  virtual void Tick(float DeltaTime) override;
 
 private:
   // --- Components ---
@@ -37,33 +36,5 @@ private:
   TObjectPtr<UStaticMeshAppearanceComponent> AppearanceComp;
 
   UPROPERTY(VisibleAnywhere, Category = "AttackWarning")
-  TObjectPtr<UDecalComponent> WarningDecalComp;
-
-  // --- Decal Settings ---
-
-  /** Length of the warning rectangle (forward direction). */
-  UPROPERTY(EditAnywhere, Category = "AttackWarning")
-  float WarningLength = 500.f;
-
-  /** Width of the warning rectangle. */
-  UPROPERTY(EditAnywhere, Category = "AttackWarning")
-  float WarningWidth = 150.f;
-
-  /** Forward offset from character center. */
-  UPROPERTY(EditAnywhere, Category = "AttackWarning")
-  float WarningForwardOffset = 250.f;
-
-  /** Duration of the wipe reveal animation in seconds. */
-  UPROPERTY(EditAnywhere, Category = "AttackWarning")
-  float WipeAnimDuration = 0.4f;
-
-  UPROPERTY()
-  TObjectPtr<UMaterialInstanceDynamic> DecalDynamicMaterial;
-
-  // --- Wipe animation state ---
-  bool bIsWipeAnimating = false;
-  float WipeProgress = 0.f;
-
-  /** Create the decal material programmatically. */
-  void CreateDecalMaterial();
+  TObjectPtr<UAttackWarningComponent> AttackWarningComp;
 };
