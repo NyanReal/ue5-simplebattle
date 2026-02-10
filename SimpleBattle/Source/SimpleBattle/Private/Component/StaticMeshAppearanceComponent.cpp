@@ -4,8 +4,9 @@
 
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
+#include "Materials/Material.h"
+#include "Materials/MaterialExpressionVectorParameter.h"
 #include "Materials/MaterialInstanceDynamic.h"
-#include "UObject/ConstructorHelpers.h"
 
 UStaticMeshAppearanceComponent::UStaticMeshAppearanceComponent() {
   PrimaryComponentTick.bCanEverTick = false;
@@ -97,19 +98,24 @@ void UStaticMeshAppearanceComponent::ApplyDynamicMaterial() {
     return;
   }
 
-  // Create dynamic material from engine default
-  UMaterialInterface *BaseMat = LoadObject<UMaterialInterface>(
-      nullptr,
-      TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
+  // Programmatically create a UMaterial with a BaseColor VectorParameter.
+  // Material expression graph connections are editor-only, so we guard them.
+  // In packaged builds, create a proper material asset instead.
+  UMaterial *ParentMat = NewObject<UMaterial>(
+      GetTransientPackage(), FName(TEXT("M_PawnColor")), RF_Transient);
 
-  if (!BaseMat) {
-    UE_LOG(LogTemp, Warning,
-           TEXT("StaticMeshAppearanceComponent: Failed to load base "
-                "material."));
-    return;
-  }
+  UMaterialExpressionVectorParameter *ColorParam =
+      NewObject<UMaterialExpressionVectorParameter>(ParentMat);
+  ColorParam->ParameterName = FName(TEXT("BaseColor"));
+  ColorParam->DefaultValue = BaseColor;
 
-  DynamicMaterial = UMaterialInstanceDynamic::Create(BaseMat, GetOwner());
+#if WITH_EDITOR
+  ParentMat->GetExpressionCollection().AddExpression(ColorParam);
+  ParentMat->GetEditorOnlyData()->BaseColor.Connect(0, ColorParam);
+  ParentMat->PostEditChange();
+#endif
+
+  DynamicMaterial = UMaterialInstanceDynamic::Create(ParentMat, GetOwner());
   DynamicMaterial->SetVectorParameterValue(TEXT("BaseColor"), BaseColor);
 
   BodyMesh->SetMaterial(0, DynamicMaterial);
