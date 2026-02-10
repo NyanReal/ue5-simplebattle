@@ -32,7 +32,7 @@ trigger: always_on
 > **AI가 헤더 파일(`.h`)을 수정한 경우, 반드시 HeaderReorder 도구를 실행해야 합니다:**
 > 
 > ```powershell
-> cd d:\github\miyakov\Tools\HeaderReorder; dotnet run -- "d:\github\miyakov\Miyakov" --all
+> cd .\Tools\HeaderReorder; dotnet run -- ".\SimpleBattle" --all
 > ```
 > 
 > 이 도구는 자동으로 `.generated.h`가 마지막 include가 되도록 재정렬합니다.
@@ -41,8 +41,8 @@ trigger: always_on
 > **수동 실행이 필요한 경우 (헤더 순서 에러 발생 시):**
 > 
 > ```powershell
-> cd d:\github\miyakov\Tools\HeaderReorder
-> dotnet run -- "d:\github\miyakov\Miyakov" --all
+> cd .\Tools\HeaderReorder
+> dotnet run -- ".\SimpleBattle" --all
 > ```
 
 ---
