@@ -15,21 +15,22 @@ ASimpleGameMode::ASimpleGameMode() {
 void ASimpleGameMode::BeginPlay() {
   Super::BeginPlay();
 
-  // Spawn one test enemy in front of the default player start
   UWorld *World = GetWorld();
-  if (World) {
-    FVector SpawnLocation(800.f, 0.f, 100.f);
-    FRotator SpawnRotation(0.f, 180.f, 0.f); // Facing back toward origin
-    FActorSpawnParameters SpawnParams;
-    SpawnParams.SpawnCollisionHandlingOverride =
-        ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+  if (!World) {
+    return;
+  }
 
-    ACharacterEnemy *Enemy = World->SpawnActor<ACharacterEnemy>(
-        ACharacterEnemy::StaticClass(), SpawnLocation, SpawnRotation,
-        SpawnParams);
-    if (Enemy) {
-      UE_LOG(LogTemp, Log, TEXT("SimpleGameMode: Spawned test enemy at %s"),
-             *SpawnLocation.ToString());
-    }
+  const FVector SpawnLocation(800.f, 0.f, 100.f);
+  const FRotator SpawnRotation(0.f, 180.f, 0.f);
+
+  FActorSpawnParameters Params;
+  Params.SpawnCollisionHandlingOverride =
+      ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+  ACharacterEnemy *Enemy =
+      World->SpawnActor<ACharacterEnemy>(ACharacterEnemy::StaticClass(),
+                                         SpawnLocation, SpawnRotation, Params);
+  if (!Enemy) {
+    UE_LOG(LogTemp, Warning, TEXT("SimpleGameMode: Failed to spawn enemy."));
   }
 }
