@@ -1,0 +1,34 @@
+# Build results
+bin/
+obj/
+out/
+
+# .NET
+*.dll
+*.exe
+*.pdb
+*.user
+*.suo
+*.cache
+
+# NuGet
+*.nupkg
+.nuget/
+packages/
+
+# Visual Studio
+.vs/
+*.vsidx
+
+# JetBrains Rider
+.idea/
+
+# Logs
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Publish output
+publish/
