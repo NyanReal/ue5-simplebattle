@@ -6,12 +6,12 @@
 #include "GameFramework/Character.h"
 #include "CharacterPlayer.generated.h"
 
-
 class USpringArmComponent;
 class UCameraComponent;
 class UInputDataAsset;
 class UInputMappingContext;
 class UInputAction;
+class UStaticMeshAppearanceComponent;
 struct FInputActionValue;
 
 /**
@@ -42,6 +42,10 @@ private:
   // --- Input Data Asset ---
   UPROPERTY(EditDefaultsOnly, Category = "Input")
   TObjectPtr<UInputDataAsset> InputDataAsset;
+
+  // --- Appearance ---
+  UPROPERTY(VisibleAnywhere, Category = "Appearance")
+  TObjectPtr<UStaticMeshAppearanceComponent> AppearanceComp;
 
   // --- Input Callbacks ---
   void Move(const FInputActionValue &Value);

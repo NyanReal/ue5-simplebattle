@@ -1,6 +1,7 @@
 // Copyright SimpleBattle. All Rights Reserved.
 
 #include "Character/CharacterPlayer.h"
+#include "Component/StaticMeshAppearanceComponent.h"
 #include "Input/InputDataAsset.h"
 
 #include "Camera/CameraComponent.h"
@@ -9,7 +10,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputActionValue.h"
-
 
 ACharacterPlayer::ACharacterPlayer() {
   PrimaryActorTick.bCanEverTick = true;
@@ -41,6 +41,10 @@ ACharacterPlayer::ACharacterPlayer() {
   CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
   CameraComp->SetupAttachment(SpringArmComp, USpringArmComponent::SocketName);
   CameraComp->bUsePawnControlRotation = false;
+
+  // Appearance (auto-creates a static mesh on the character)
+  AppearanceComp = CreateDefaultSubobject<UStaticMeshAppearanceComponent>(
+      TEXT("Appearance"));
 }
 
 void ACharacterPlayer::BeginPlay() {
